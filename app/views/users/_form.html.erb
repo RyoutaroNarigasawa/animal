@@ -1,47 +1,14 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :name %>
+  <%= error_span(@user[:name]) %>
+  <%= f.input :explain %>
+  <%= error_span(@user[:explain]) %>
+  <%= f.input :photo %>
+  <%= error_span(@user[:photo]) %>
+  <%= f.input :image %>
+  <%= error_span(@user[:image]) %>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :explain %><br>
-    <%= f.text_field :explain %>
-  </div>
-  <div class="field">
-    <% if @user.image? %>
-    <div class="thumbnail">
-        <%= image_tag @user.image.url %>
-    </div>
-    <% end %><br>
-    <%= f.label :image %><br>
-    <%= f.file_field :image %>
-    <%= f.hidden_field :image_cache %>
-  </div>
-  <div class="field">
-    <% if @user.persisted? && @user.image? %>
-      <label>
-        <%= f.check_box :remove_image %>
-        画像を削除
-      </label>
-    <% end %>
-  </div>
-  <div class="field">
-    <%= f.label :photo %><br>
-    <%= f.text_field :photo %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                users_path, :class => 'btn btn-default' %>
 <% end %>
